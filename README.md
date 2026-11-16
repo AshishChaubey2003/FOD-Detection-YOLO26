@@ -2,8 +2,6 @@
 
 Detect 31 types of foreign object debris (FOD) in 300x300 images, trained with **YOLO26n** and evaluated on a **group-aware held-out test set**.
 
-> **Status:** personal portfolio project. It is **not** a production system. No production-readiness, real-time or real UAV-deployment claim is made, and no trained model weights are published.
-
 ## Contents
 [Problem](#problem) · [Objectives](#objectives) · [At a glance](#at-a-glance) · [Workflow](#workflow) · [Dataset](#dataset) · [Data preparation](#data-preparation-and-group-aware-split) · [Model](#model-and-training) · [Results](#results) · [Limitations](#limitations) · [Future work](#future-improvements) · [Reproduce](#reproduce) · [Repository layout](#repository-layout) · [Acknowledgements](#acknowledgements)
 
