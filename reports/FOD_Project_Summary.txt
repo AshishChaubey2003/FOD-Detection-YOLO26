@@ -1,0 +1,13 @@
+FOD PROJECT SUMMARY - YOLO26n Foreign Object Detection (dataset-level experiment)
+
+What was built: an end-to-end pipeline that converts Pascal VOC annotations to YOLO format, splits 33,793 images (31 classes, 300x300) by group into train/val/test, trains YOLO26n on Kaggle (T4), and evaluates on 6,721 held-out test images.
+Training: stopped by EarlyStopping at epoch 43; best checkpoint epoch 23.
+Validation (epoch 23): P 0.558, R 0.473, mAP50 0.477, mAP50-95 0.393.
+Official test: P 0.380, R 0.426, mAP50 0.367, mAP50-95 0.252 (evaluation arguments unrecovered).
+Custom test analysis (conf 0.25, IoU 0.50): TP 2,896, FP 4,117, FN 3,825, Precision 0.4129, Recall 0.4309, F1 0.4217.
+Quality work: found and fixed a class-ID mapping error (category_id is 1-based in the exported JSON) by auditing the Ultralytics source; discarded the faulty results.
+Findings: strong on Bolt, BoltWasher, FuelCap, Nut, Wire, Rock (and Cutter); zero true positives for Hammer, LuggagePart, Nail, Pen, Pliers; 8 classes have no test ground truth.
+Hypotheses (not visually confirmed): confusion between Pliers/Screwdriver, PaintChip/PlasticPart, Wrench/AdjustableWrench.
+Proposed next steps: data/label audit for weak classes, validation-based per-class threshold calibration, size-binned recall analysis.
+Limitations: close-up dataset vs real UAV runway imagery, 300x300 resolution, no fog data, Wet/Dim confounded, single run, leakage-neighbour audit deferred, visual inspection pending.
+NOT production-ready. Not a runway safety system; human verification and airport procedures remain essential.

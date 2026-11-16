@@ -1,0 +1,32 @@
+class_id,class_name,gt,predictions,tp,fp,fn,precision,recall,f1,pred_to_gt_ratio,share_of_total_fp,share_of_total_fn,evidence_tier,flags,computed_observation_from_approved_examples,visual_confirmation
+0,AdjustableClamp,0,2,0,2,0,0.0,0.0,0.0,N/A,0.0005,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT),none among the 15 approved examples,pending
+1,AdjustableWrench,0,248,0,248,0,0.0,0.0,0.0,N/A,0.0602,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT);high_volume_low_precision,No test GT. FP 012689 conf 0.800 with no GT overlap IoU>=0.1; also nearest pred to Wrench GT in 018701.,pending
+2,Battery,173,1,1,0,172,1.0,0.0058,0.0115,0.01,0.0,0.045,weak,low_recall,none among the 15 approved examples,pending
+3,Bolt,891,947,722,225,169,0.7624,0.8103,0.7856,1.06,0.0547,0.0442,strong,none,"TP 011992: conf 0.846, IoU 0.906.",pending
+4,BoltNutSet,0,19,0,19,0,0.0,0.0,0.0,N/A,0.0046,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT),none among the 15 approved examples,pending
+5,BoltWasher,142,133,126,7,16,0.9474,0.8873,0.9164,0.94,0.0017,0.0042,strong,none,"TP 001415: object ~9.3x7.7 px, conf 0.821, IoU 0.774.",pending
+6,ClampPart,141,219,14,205,127,0.0639,0.0993,0.0778,1.55,0.0498,0.0332,weak,high_volume_low_precision;low_recall,Mixed 021498: GT ClampPart unmatched; Wrench FP overlaps GT ClampPart IoU ~0.33 (Stage B).,pending
+7,Cutter,188,150,112,38,76,0.7467,0.5957,0.6627,0.8,0.0092,0.0199,strong,none,none among the 15 approved examples,pending
+8,FuelCap,119,130,108,22,11,0.8308,0.9076,0.8675,1.09,0.0053,0.0029,strong,none,"TP 011517: conf 0.924, IoU 0.813.",pending
+9,Hammer,139,12,0,12,139,0.0,0.0,0.0,0.09,0.0029,0.0363,zero_TP,low_recall,FN 019176: nearest pred MetalPart conf 0.794 IoU only 0.156; no same-class pred IoU>=0.5 at any conf.,pending
+10,Hose,0,239,0,239,0,0.0,0.0,0.0,N/A,0.0581,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT);high_volume_low_precision,none among the 15 approved examples,pending
+11,Label,155,42,22,20,133,0.5238,0.1419,0.2234,0.27,0.0049,0.0348,weak,low_recall,none among the 15 approved examples,pending
+12,LuggagePart,174,8,0,8,174,0.0,0.0,0.0,0.05,0.0019,0.0455,zero_TP,low_recall,none among the 15 approved examples,pending
+13,LuggageTag,167,41,13,28,154,0.3171,0.0778,0.125,0.25,0.0068,0.0403,weak,low_recall,none among the 15 approved examples,pending
+14,MetalPart,220,148,7,141,213,0.0473,0.0318,0.038,0.67,0.0342,0.0557,weak,high_volume_low_precision;low_recall,none among the 15 approved examples,pending
+15,MetalSheet,0,5,0,5,0,0.0,0.0,0.0,N/A,0.0012,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT),none among the 15 approved examples,pending
+16,Nail,188,5,0,5,188,0.0,0.0,0.0,0.03,0.0012,0.0492,zero_TP,low_recall,none among the 15 approved examples,pending
+17,Nut,270,204,171,33,99,0.8382,0.6333,0.7215,0.76,0.008,0.0259,strong,none,none among the 15 approved examples,pending
+18,PaintChip,186,343,22,321,164,0.0641,0.1183,0.0832,1.84,0.078,0.0429,weak,high_volume_low_precision;low_recall,FN 024416: nearest pred PlasticPart conf 0.872 IoU 0.971; no same-class pred IoU>=0.5. FP 004563: PaintChip pred overlaps GT PlasticPart IoU 0.867. Mixed 024271 (0/1/1).,pending
+19,Pen,143,119,0,119,143,0.0,0.0,0.0,0.83,0.0289,0.0374,zero_TP,high_volume_low_precision;low_recall,FP 024922: Wrench pred overlaps GT Pen IoU 0.907.,pending
+20,PlasticPart,430,505,154,351,276,0.305,0.3581,0.3294,1.17,0.0853,0.0722,moderate,high_volume_low_precision,GT PlasticPart overlapped by PaintChip pred in 004563 (IoU 0.867); PlasticPart pred sits on a PaintChip GT in 024416 (IoU 0.971).,pending
+21,Pliers,480,282,0,282,480,0.0,0.0,0.0,0.59,0.0685,0.1255,zero_TP,high_volume_low_precision;low_recall,FN 017872: nearest pred Screwdriver conf 0.819 IoU 0.835; same-class Pliers pred conf 0.006 (<0.25). FP 017985 (Screwdriver pred) overlaps GT Pliers IoU 0.864.,pending
+22,Rock,115,205,115,90,0,0.561,1.0,0.7188,1.78,0.0219,0.0,strong,none,"TP 028364: conf 0.918, IoU 0.853.",pending
+23,Screw,0,44,0,44,0,0.0,0.0,0.0,N/A,0.0107,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT),none among the 15 approved examples,pending
+24,Screwdriver,168,769,106,663,62,0.1378,0.631,0.2263,4.58,0.161,0.0162,weak,high_volume_low_precision,FP 017985: pred overlaps GT Pliers IoU 0.864 (same-class IoU 0.0).,pending
+25,SodaCan,202,60,43,17,159,0.7167,0.2129,0.3282,0.3,0.0041,0.0416,moderate,none,none among the 15 approved examples,pending
+26,Tape,0,0,0,0,0,0.0,0.0,0.0,N/A,0.0,0.0,no_test_GT,none,none among the 15 approved examples,pending
+27,Washer,450,770,390,380,60,0.5065,0.8667,0.6393,1.71,0.0923,0.0157,moderate,none,none among the 15 approved examples,pending
+28,Wire,920,770,633,137,287,0.8221,0.688,0.7491,0.84,0.0333,0.075,strong,none,none among the 15 approved examples,pending
+29,Wood,0,86,0,86,0,0.0,0.0,0.0,N/A,0.0209,0.0,no_test_GT,all_predictions_are_FP_(no_test_GT),none among the 15 approved examples,pending
+30,Wrench,660,507,137,370,523,0.2702,0.2076,0.2348,0.77,0.0899,0.1367,weak,high_volume_low_precision,"FN 018701: nearest pred AdjustableWrench conf 0.646 IoU 0.909; same-class Wrench pred conf 0.032 (<0.25). FP 024922: Wrench pred overlaps GT Pen IoU 0.907. Mixed 018325 (1/1/0), 021498 (0/3/1).",pending

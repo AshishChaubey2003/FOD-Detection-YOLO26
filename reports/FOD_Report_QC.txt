@@ -1,0 +1,32 @@
+FOD REPORT QC - STEP 15
+Final status: PASS
+
+PASS  markdown: corrected metrics present
+PASS  markdown: superseded Cell 4 numbers absent
+PASS  markdown: 31 class-wise rows match corrected CSV
+PASS  markdown: eight zero-GT classes disclosed
+PASS  markdown: visual inspection limitation disclosed
+PASS  markdown: UAV architecture labelled proposed
+PASS  markdown: no production-readiness claim
+PASS  markdown: args.yaml missing, momentum discrepancy, deferred leakage audit disclosed
+PASS  metrics CSV separates validation / official test / custom / diagnostic
+PASS  PDF opens and has pages (10)
+PASS  every page has text
+PASS  page numbers 'Page X of N' on every page
+PASS  all section headings present in PDF text (17)
+PASS  16 numbered sections in markdown
+PASS  key metrics present in PDF (2,896 / 4,117 / 3,825 / 0.4129 / 0.4309 / 0.4217)
+PASS  superseded Cell 4 numbers absent from PDF
+PASS  all 31 class names present in PDF
+PASS  markdown text lines found in PDF (100/100)
+PASS  no table wider than the text area
+PASS  no markup fallbacks needed
+PASS  figures exist and are non-empty
+
+KNOWN CAVEATS DISCLOSED IN THE REPORT (not QC failures):
+- Official Step 13 test metrics come from console output; no saved results file; evaluation arguments unrecovered (args.yaml missing).
+- Momentum: args.yaml says 0.937, project record says 0.9; executed value not independently verified.
+- Training duration 2.410 h is provided; results.csv time column gives 1.716 h for epochs 9 to 43 (mismatch, treated as unverified).
+- Weather/lighting statistics and conversion-stage counts are provided from earlier stages (arithmetic and label-file counts re-checked).
+- Visual inspection of the annotated examples was not completed; class confusion remains a hypothesis.
+- Cross-split neighbouring-frame leakage audit deferred.

@@ -1,0 +1,77 @@
+STEP 14D - ERROR ANALYSIS, FAILURE PATTERNS & IMPROVEMENT RECOMMENDATIONS
+Project: Foreign Object Detection (FOD), YOLO26n, FOD Pascal VOC Format V2.1 (33,793 images, 31 classes, 300x300), Kaggle GPU T4
+Best checkpoint: epoch 23; EarlyStopping at epoch 43; test split (6,721 images) first evaluated in Step 13.
+Evidence tags: [MEASURED] direct result | [COMPUTED] derived from measured files | [PROVIDED] user-supplied, not re-measured here | [HYPOTHESIS] plausible, unverified | [RECOMMENDATION] proposal, not a result | [PENDING] needs visual inspection
+
+0. EXECUTIVE SUMMARY
+- [MEASURED] At conf>=0.25, IoU>=0.50 the model gets TP=2896, FP=4117, FN=3825 (Precision 0.4129, Recall 0.4309, F1 0.4217). It both misses objects (56.9% of GT) and over-predicts (58.7% of retained predictions are FP).
+- [COMPUTED] Errors are concentrated: 5 classes with zero TP hold 1124 GT objects (16.7% of test GT, 29.4% of all FN); 8 classes with no test GT receive 643 predictions (15.6% of all FP).
+- [HYPOTHESIS] Several errors look like class confusion between visually related classes (Pliers/Screwdriver, PaintChip/PlasticPart, Wrench/AdjustableWrench). Box overlap supports this, visual confirmation is [PENDING].
+- [RECOMMENDATION] Top improvements: (1) class-level data/label audit and rebalancing for confusable and zero-TP classes, (2) validation-based per-class threshold calibration with a stronger evaluation protocol, (3) conditional small-object/resolution experiment after measuring size effects.
+- This system is NOT production-ready and must not be used as an autonomous runway safety system.
+
+1. EVALUATION BASIS AND CAVEATS
+- Authoritative results: corrected Step 14B Cell 6 (mapping YOLO class = category_id - 1, verified from ultralytics 8.4.214 source). The earlier Cell 4 output is superseded and not used.
+- Source predictions 47592; retained at conf>=0.25: 7013; TP+FP = 7013; TP+FN = 6721 (all verified in Cell 1).
+- Official Step 13 test metrics (P 0.380, R 0.426, mAP50 0.367, mAP50-95 0.252) and the custom fixed-threshold metrics are NOT directly comparable: the official conf/IoU arguments were not recovered because args.yaml is missing.
+- Visual evidence limitation: the 15 annotated PNGs were generated programmatically and were not visually inspected by the analyst. All observations below are computed from coordinates, class IDs, IoU and confidence. [PENDING] marks anything that needs visual confirmation (shadows, reflections, appearance, contrast, background texture are NOT confirmed).
+
+A. OVERALL ERROR ANALYSIS
+A1. Both error types are large. [MEASURED] 3825 of 6721 GT objects are missed (56.9%); 4117 of 7013 retained predictions are false (58.7%). Precision and recall are therefore both limited (~0.41 and ~0.43).
+A2. Where errors concentrate [COMPUTED]. Top FP classes: Screwdriver 663, Washer 380, Wrench 370, PlasticPart 351, PaintChip 321. Top FN classes: Wrench 523, Pliers 480, Wire 287, PlasticPart 276, MetalPart 213. Zero-TP classes with GT: Hammer, LuggagePart, Nail, Pen, Pliers. Eight classes (AdjustableClamp, AdjustableWrench, BoltNutSet, Hose, MetalSheet, Screw, Tape, Wood) have no test GT, so every prediction on them is FP by construction; this does not prove the model can never detect them.
+A3. Validation-to-test gap [PROVIDED val values, test values from Step 13]. Val -> test: Precision 0.558 -> 0.380, Recall 0.473 -> 0.426, mAP50 0.477 -> 0.367 (-0.110, -23.1%), mAP50-95 0.393 -> 0.252 (-0.141, -35.9%). The drop suggests the model generalizes less well to the test split than validation indicates.
+A4. Why the gap alone does not prove overfitting [HYPOTHESES]: (a) the best epoch (23) was chosen on validation, which biases validation upward; (b) the test split has 8 classes with zero GT while class mix differs from validation; (c) official evaluation arguments are unrecovered; (d) test and validation images may differ in distribution. Separating overfitting from split differences needs train/val/test comparison on the same classes and metric, and learning curves.
+A5. mAP vs fixed-threshold TP/FP/FN. mAP integrates the precision-recall curve over all confidence levels; TP/FP/FN at conf 0.25 reflect one operating point. [MEASURED on test, corrected mapping] lowering the threshold from 0.25 to 0.001 raises recall from 0.4309 to 0.6989 but drops precision from 0.4129 to 0.0987; raising it to 0.75 gives precision 0.5076 and recall 0.258. Many correct detections therefore exist at low confidence, and a single fixed threshold penalizes them.
+
+B. CLASS-WISE ANALYSIS (tiers are a descriptive rule: no_test_GT; zero_TP; strong F1>=0.65; moderate 0.30-0.65; weak F1<0.30)
+- Strong [COMPUTED]: Bolt, BoltWasher, Cutter, FuelCap, Nut, Rock, Wire
+- Moderate: PlasticPart, SodaCan, Washer
+- Weak (TP>0): Battery, ClampPart, Label, LuggageTag, MetalPart, PaintChip, Screwdriver, Wrench
+- Zero TP with GT>0: Hammer, LuggagePart, Nail, Pen, Pliers
+- No test GT (no independent conclusion possible): AdjustableClamp, AdjustableWrench, BoltNutSet, Hose, MetalSheet, Screw, Tape, Wood
+- Insufficient representation: only the 8 zero-GT classes. Classes with GT (115 to 920) have no confidence intervals computed, so small differences between classes should not be over-read.
+- High prediction volume with low precision (>=100 predictions, precision <0.35): AdjustableWrench, ClampPart, Hose, MetalPart, PaintChip, Pen, PlasticPart, Pliers, Screwdriver, Wrench. Screwdriver has 769 predictions for 168 GT (663 FP).
+Possible class confusion (from the approved examples; all [HYPOTHESIS], visual confirmation [PENDING]):
+  1. Pliers <-> Screwdriver: FN 017872 (GT Pliers, nearest pred Screwdriver conf 0.819, IoU 0.835; Pliers pred exists at conf 0.006) and FP 017985 (Screwdriver pred overlaps GT Pliers, IoU 0.864). Class level: Pliers 480 GT with 0 TP; Screwdriver 663 FP.
+  2. PaintChip <-> PlasticPart (both directions): FP 004563 (PaintChip pred overlaps GT PlasticPart, IoU 0.867) and FN 024416 (GT PaintChip, PlasticPart pred conf 0.872, IoU 0.971). Class level: PaintChip 186 GT, 22 TP, 321 FP.
+  3. Wrench <-> AdjustableWrench: FN 018701 (GT Wrench, AdjustableWrench pred conf 0.646, IoU 0.909; Wrench pred at conf 0.032). AdjustableWrench has no test GT but 248 predictions. Class level: Wrench 660 GT, 137 TP, 370 FP, 523 FN.
+  4. Pen -> Wrench: FP 024922 (Wrench pred overlaps GT Pen, IoU 0.907); single example.
+  5. Hammer: FN 019176 nearest pred MetalPart has IoU only 0.156, so this is NOT an overlap-based confusion; the cause is unknown.
+Caution: the approved examples were selected, and several have consecutive image IDs (e.g. 017871-017873, 017984-017989) that may be near-identical frames. They illustrate patterns; they do not prove general behaviour. Training-set class counts were not reviewed in this step, so class imbalance is NOT established as the cause of weak classes.
+
+C. OBJECT SIZE AND LOCALIZATION
+- [MEASURED] BoltWasher 001415 (~9.3 x 7.7 px) is a TP (conf 0.821, IoU 0.774), and BoltWasher is a strong class (P 0.947, R 0.887). Tiny size alone therefore does not explain failure.
+- [COMPUTED] The missed examples are large: Hammer 019176 270.8x230.1 px, Pliers 017872 169.7x262.4, Wrench 018701 201.1x128.8, PaintChip 024416 162.3x249.3. For these, class discrimination or annotation/definition issues look more relevant than size [HYPOTHESIS].
+- [COMPUTED, illustrative arithmetic, not measured detections] A perfect box shifted by 2 px diagonally has IoU 0.410 for a 9.3x7.7 object, 0.863 for 49.9x57.2, and 0.931 for 86.6x155.7. At IoU 0.50, small boxes are very sensitive to small localization errors, so a visually close prediction can become both an FP and an FN.
+- Images are natively 300x300. Enlarging them adds no new information and is not guaranteed to help; this must be tested. No size-binned recall analysis over all GT was performed, so no overall size effect is claimed.
+
+D. CONFIDENCE THRESHOLD AND SAFETY TRADE-OFF
+Test-set diagnostic (corrected mapping; for understanding the trade-off only, NOT for choosing a threshold, since tuning on test would leak):
+  conf 0.001: TP=4697 FP=42895 FN=2024 Precision=0.0987 Recall=0.6989
+  conf 0.01: TP=3867 FP=13112 FN=2854 Precision=0.2278 Recall=0.5754
+  conf 0.05: TP=3434 FP=7423 FN=3287 Precision=0.3163 Recall=0.5109
+  conf 0.1: TP=3234 FP=5899 FN=3487 Precision=0.3541 Recall=0.4812
+  conf 0.25: TP=2896 FP=4117 FN=3825 Precision=0.4129 Recall=0.4309
+  conf 0.5: TP=2432 FP=2850 FN=4289 Precision=0.4604 Recall=0.3619
+  conf 0.75: TP=1734 FP=1682 FN=4987 Precision=0.5076 Recall=0.258
+- A single threshold may not suit all classes [HYPOTHESIS]: in two examples the correct same-class prediction had very low confidence (Pliers 0.006, Wrench 0.032) while a wrong-class prediction was confident (0.819, 0.646). Class-wise confidence behaviour was not measured; it needs validation-based calibration.
+- Safety: a missed object (FN) can leave debris on the runway; a false alarm (FP) costs inspection time and can cause alert fatigue. A screening role would likely favour high recall with human verification, but the operating point must be set on validation data against an explicit safety requirement.
+- Status: [MEASURED] tested threshold = 0.25. [RECOMMENDATION] future experiments: per-class thresholds chosen on validation. [UNVERIFIED] any specific new threshold; none is recommended here. Even at conf 0.001, recall is 0.6989, so a large share of objects is still missed.
+- Human verification is mandatory in any operational use; this model must not be deployed as an autonomous runway safety system.
+
+E. WEATHER, LIGHTING AND DATASET LIMITATIONS [PROVIDED Step 4b statistics; arithmetic verified]
+- Dry 26,577 (78.65%), Wet 7,216 (21.35%); Bright 16,942 (50.13%), Dim 12,464 (36.88%), Dark 4,387 (12.98%); Fog absent.
+- Every Wet image is Dim, so wetness and lighting are confounded and cannot be separated. Dark is not verified to mean night.
+- Images are close-up objects on concrete/asphalt-like backgrounds at 300x300; real UAV runway footage (altitude, motion blur, scale, glare, shadows, full-frame clutter) may differ substantially, which limits external validity.
+- No per-condition test performance was computed, so no error is attributed to weather or lighting.
+- Unresolved: the leakage-neighbour audit (whether adjacent frames fall in different splits) was deferred and not run. If near-duplicate frames cross splits, test metrics may be optimistic [HYPOTHESIS, unverified].
+
+F. PRIORITIZED IMPROVEMENTS (details in improvement_roadmap.csv; expected benefits are hypotheses, not results)
+1. Class-level data/label audit and rebalancing for zero-TP and confusable classes. Problem: 1124 GT in 5 zero-TP classes; confusable pairs above. Experiment: count per-class training instances, review annotation/class definitions for the pairs, add varied examples or class-aware sampling, retrain on the same splits. Measure: per-class recall/precision/F1 and mAP50 on validation, confusion off-diagonals, then one final test evaluation. Risk: labels may be intrinsically ambiguous; rebalancing may hurt strong classes.
+2. Validation-based per-class threshold calibration and stronger evaluation. Problem: one threshold (0.25), unrecovered official config. Experiment: save all eval arguments, compute per-class PR curves on validation, choose operating points for an explicit recall target, freeze, evaluate once on test with bootstrap confidence intervals. Risk: thresholds may not transfer; small per-class validation counts.
+3. (Conditional) Small-object/resolution/tiling experiment. First measure recall by GT-size bin on existing predictions; only if small objects are shown to limit performance, ablate larger input size and tiled inference against the baseline. Risk: compute/latency, no extra detail beyond native 300x300, tile-merge duplicates.
+
+G. UAV DEPLOYMENT: see uav_deployment_architecture.txt (conceptual; no latency, range or accuracy figures are claimed).
+
+H. UNRESOLVED LIMITATIONS
+- Visual confirmation of all failure explanations is pending. Official Step 13 evaluation arguments are unrecovered (args.yaml missing). Val metrics and Step 4b statistics are user-provided. Training class counts, size-binned recall, per-condition performance and the leakage-neighbour audit were not performed. Results come from one training run and one test split.

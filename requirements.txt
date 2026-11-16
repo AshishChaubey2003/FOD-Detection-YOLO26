@@ -1,0 +1,12 @@
+# Only ultralytics is version-pinned (verified from the training run: 8.4.214).
+# Other versions were NOT recorded and are left unpinned.
+ultralytics==8.4.214
+numpy
+pandas
+scipy
+opencv-python
+Pillow
+matplotlib
+seaborn
+psutil
+torch

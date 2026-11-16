@@ -1,0 +1,14 @@
+UAV FOD DETECTION - CONCEPTUAL FUTURE ARCHITECTURE (not implemented; no performance figures claimed)
+Status: research prototype only. The current model is NOT production-ready and must not act as an autonomous runway safety system.
+
+1. UAV camera capture: runway images/video under an approved inspection plan. Open points: camera model, altitude, speed, exposure, motion blur, and whether footage resembles the 300x300 close-up training images (likely not; external validity unverified).
+2. Frame extraction and preprocessing: sample frames, store timestamps and frame IDs, apply consistent resize/normalization; consider tiling for large frames (conditional, see roadmap item 3). Camera calibration (intrinsics, distortion) recorded for each flight.
+3. FOD detector inference: run the detector on edge or ground station. Latency, power and thermal limits are UNKNOWN and must be measured on the chosen device; none are claimed here.
+4. Confidence and location filtering: apply per-class thresholds chosen on validation data (roadmap item 2), not the current 0.25. Estimate ground position and object size using calibration, flight altitude and GPS/IMU metadata where available; accuracy of these estimates is unverified and must be measured.
+5. Human review dashboard: show candidates with image crop, class, confidence, map position and time; keep low-confidence candidates reviewable because missed debris is the higher-risk error.
+6. Alert and evidence storage: store original frame, annotated frame, model/version, thresholds, GPS/metadata and operator decision with integrity protection and audit trail.
+7. Human inspection/confirmation: an authorized person verifies each alert and, where required, the runway area before any operational decision.
+8. Feedback collection: record confirmed TP/FP/FN, add hard cases to a reviewed dataset, evaluate on a held-out split, and version models before any redeployment.
+
+Cross-cutting requirements: secure communication (authenticated, encrypted links between UAV, ground station and dashboard); access control and logging; privacy/regulatory approval; fail-safe behaviour when the link, GPS or camera fails; ongoing monitoring of detection quality under new weather, lighting and surfaces (dataset has no fog and confounds Wet with Dim).
+Not claimed: detection range, latency, GPS accuracy, battery endurance or any deployment performance.

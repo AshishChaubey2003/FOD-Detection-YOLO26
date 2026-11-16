@@ -1,0 +1,29 @@
+{
+  "mapping": "class_id = category_id - 1 (ultralytics 8.4.214 val.py line 132 / pred_to_json line 530)",
+  "confidence_threshold": 0.25,
+  "iou_threshold": 0.5,
+  "matching": "greedy one-to-one, same class only",
+  "images_processed": 6721,
+  "total_gt": 6721,
+  "source_predictions": 47592,
+  "retained_predictions": 7013,
+  "TP": 2896,
+  "FP": 4117,
+  "FN": 3825,
+  "precision": 0.4129,
+  "recall": 0.4309,
+  "validation": {
+    "1. All 6721 images processed exactly once": true,
+    "2. All category IDs map to valid class IDs 0-30": true,
+    "3. No mapping silently skipped (mapped == source predictions)": true,
+    "4. TP + FN = Total GT": true,
+    "5. TP + FP = Total considered predictions": true,
+    "6. Sum class-wise GT = Total GT": true,
+    "7. Sum class-wise predictions = Total considered": true,
+    "8. Sum class-wise TP/FP/FN = overall": true,
+    "9. All predictions below 0.25 excluded": true,
+    "10. No GT/prediction matched more than once": true,
+    "11. Wrench (class 30) includes all category_id=31 preds": true
+  },
+  "status": "PASS"
+}

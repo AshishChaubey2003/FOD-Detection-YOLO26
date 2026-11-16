@@ -1,0 +1,54 @@
+metric_group,evaluation_basis,split,conf_threshold,iou_threshold,metric,value,source
+validation,"training-time validation, epoch 23 (best)",val,not recorded,not recorded,Precision,0.55778,step12_training/runs/yolo26n_fod_v1/results.csv
+validation,"training-time validation, epoch 23 (best)",val,not recorded,not recorded,Recall,0.47302,step12_training/runs/yolo26n_fod_v1/results.csv
+validation,"training-time validation, epoch 23 (best)",val,not recorded,not recorded,mAP50,0.47708,step12_training/runs/yolo26n_fod_v1/results.csv
+validation,"training-time validation, epoch 23 (best)",val,not recorded,not recorded,mAP50-95,0.39254,step12_training/runs/yolo26n_fod_v1/results.csv
+official_test,Step 13 model.val(split=test); args unrecovered,test,unrecovered,unrecovered,Precision,0.38,Step 13 console output (no saved results file)
+official_test,Step 13 model.val(split=test); args unrecovered,test,unrecovered,unrecovered,Recall,0.426,Step 13 console output (no saved results file)
+official_test,Step 13 model.val(split=test); args unrecovered,test,unrecovered,unrecovered,mAP50,0.367,Step 13 console output (no saved results file)
+official_test,Step 13 model.val(split=test); args unrecovered,test,unrecovered,unrecovered,mAP50-95,0.252,Step 13 console output (no saved results file)
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,images,6721,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,ground_truth_objects,6721,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,source_predictions,47592,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,retained_predictions,7013,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,TP,2896,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,FP,4117,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,FN,3825,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,Precision,0.4129,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,Recall,0.4309,step14b_corrected/overall_metrics.json
+custom_test_fixed_threshold,"corrected Step 14B Cell 6, class=category_id-1, greedy same-class",test,0.25,0.5,F1,0.4217,step14b_corrected/overall_metrics.json
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.001,0.5,TP,4697,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.001,0.5,FP,42895,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.001,0.5,FN,2024,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.001,0.5,Precision,0.0987,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.001,0.5,Recall,0.6989,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.01,0.5,TP,3867,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.01,0.5,FP,13112,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.01,0.5,FN,2854,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.01,0.5,Precision,0.2278,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.01,0.5,Recall,0.5754,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.05,0.5,TP,3434,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.05,0.5,FP,7423,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.05,0.5,FN,3287,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.05,0.5,Precision,0.3163,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.05,0.5,Recall,0.5109,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.1,0.5,TP,3234,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.1,0.5,FP,5899,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.1,0.5,FN,3487,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.1,0.5,Precision,0.3541,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.1,0.5,Recall,0.4812,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.25,0.5,TP,2896,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.25,0.5,FP,4117,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.25,0.5,FN,3825,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.25,0.5,Precision,0.4129,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.25,0.5,Recall,0.4309,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.5,0.5,TP,2432,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.5,0.5,FP,2850,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.5,0.5,FN,4289,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.5,0.5,Precision,0.4604,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.5,0.5,Recall,0.3619,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.75,0.5,TP,1734,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.75,0.5,FP,1682,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.75,0.5,FN,4987,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.75,0.5,Precision,0.5076,step14b_anomaly_diagnostic/threshold_comparison.csv
+custom_test_threshold_diagnostic,diagnostic only; not a threshold recommendation,test,0.75,0.5,Recall,0.258,step14b_anomaly_diagnostic/threshold_comparison.csv
